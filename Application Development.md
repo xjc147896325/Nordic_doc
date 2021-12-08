@@ -5,8 +5,6 @@
 <h2></h2>
 <h2></h2>
 <h2></h2>
-<h2></h2>
-<h2></h2>
 <h2>总览</h2>
 <p>zephyr的系统构建基于CMake</p>
 <p>这个构建系统以应用为核心，并且需要基于zephyr的应用去初始化内核的源码树。(application-centric——以应用为核心的）应用构建<strike>包含控制配置和创建程序的应用和内核自己</strike>控制应用程序和Zephyr本身的配置和构建过程，编译他们为一个二进制文件。</p>
@@ -89,63 +87,53 @@ home/app
         <p><strike>独立架构</strike>与体系架构无关的kernel代码</p>
     </li>
     <h4><li>
-        CMakeLists.txt</h4>
-        <p></p>
+        lib</h4>
+        <p>库代码，包含最小标准C库。</p>
     </li>
     <h4><li>
-        CMakeLists.txt</h4>
-        <p></p>
+        misc</h4>
+        <p>各种各样的/杂的（miscellaneous）代码，那些不属于任何其他顶层文件夹的。</p>
     </li>
     <h4><li>
-        CMakeLists.txt</h4>
-        <p></p>
+        samples</h4>
+        <p>例程应用用于证明如何使用Zephyr的功能。【演示 Zephyr 功能使用的示例应用程序。】</p>
     </li>
     <h4><li>
-        CMakeLists.txt</h4>
-        <p></p>
+        scripts</h4>
+        <p>各种程序和其他文件被使用于构建与测试Zephyr应用</p>
     </li>
     <h4><li>
-        CMakeLists.txt</h4>
-        <p></p>
+        cmake</h4>
+        <p>构建Zephyr需要的额外的【其他的】构建脚本（script）</p>
     </li>
     <h4><li>
-        CMakeLists.txt</h4>
-        <p></p>
+        subsys</h4>
+        <p>Zephyr的子系统，包括：</p>
+        <ul>
+            <li>USB设备栈代码。</li>
+            <li>网络<strike>工作相关</strike>代码，包括蓝牙协议栈与网络<strike>工作</strike>协议栈。</li>
+            <li>文件系统代码。</li>
+            <li>蓝牙主机和控制器。</li>
+        </ul>
     </li>
     <h4><li>
-        CMakeLists.txt</h4>
-        <p></p>
+        test</h4>
+        <p>Zephyr功能的测试代码和基准测试。</p>
     </li>
     <h4><li>
-        CMakeLists.txt</h4>
-        <p></p>
-    </li>
-    <h4><li>
-        CMakeLists.txt</h4>
-        <p></p>
-    </li>
-    <h4><li>
-        CMakeLists.txt</h4>
-        <p></p>
-    </li>
-    <h4><li>
-        CMakeLists.txt</h4>
-        <p></p>
-    </li>
-    <h4><li>
-        CMakeLists.txt</h4>
-        <p></p>
-    </li>
-    <h4><li>
-        CMakeLists.txt</h4>
-        <p></p>
-    </li>
-    <h4><li>
-        CMakeLists.txt</h4>
-        <p></p>
+        share</h4>
+        <p>额外的架构无关的【独立的】数据，目前包含Zephyr的CMake包。</p>
     </li>
 </ul>
-<p></p>
+<h2>独立的（standalone）例程【示例独立应用程序】</h2>
+<p>一个独立的包含它自己的Git文件夹的参考应用可以在<a href="https://github.com/zephyrproject-rtos/example-application">例程</a>文件夹中找到。它可以被用作如何使用<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/west/workspaces.html#west-t2">T2星形拓扑（T2 star topology）</a>去构建基于Zephyr的树外（out-of-tree）应用的参考。<strike>他也演示了使用普通的树外功能的应用</strike>它还演示了应用程序中常用功能的树外使用，例如：</p>
+<ul>
+    <li>用户板子【定制板】</li>    
+    <li>用户绑定设备树【自定义设备树绑定】</li>    
+    <li>用户驱动【自定义驱动程序】</li>    
+    <li>持续集成（Continuous Integration——CI）设置（setup）</li>    
+<ul>
+<h2>创建一个应用</h2>
 <p></p>
 <p></p>
 <p></p>
