@@ -73,6 +73,62 @@ home/app
         <p>Zephyr 技术文档源文件和用于生成 <a href="https://docs.zephyrproject.org">https://docs.zephyrproject.org</a> 网络内容的工具。</p>
     </li>
     <h4><li>
+        drivers</h4>
+        <p>设备驱动代码。</p>
+    </li>
+    <h4><li>
+        dts</h4>
+        <p>设备树源文件用于描述不可发现的基于特定板子的硬件细节</p>
+    </li>
+    <h4><li>
+        include</h4>
+        <p>所有公共API的头文件，<strike>其他的定义在lib中</strike>lib下定义的文件除外。</p>
+    </li>
+    <h4><li>
+        kernel</h4>
+        <p><strike>独立架构</strike>与体系架构无关的kernel代码</p>
+    </li>
+    <h4><li>
+        CMakeLists.txt</h4>
+        <p></p>
+    </li>
+    <h4><li>
+        CMakeLists.txt</h4>
+        <p></p>
+    </li>
+    <h4><li>
+        CMakeLists.txt</h4>
+        <p></p>
+    </li>
+    <h4><li>
+        CMakeLists.txt</h4>
+        <p></p>
+    </li>
+    <h4><li>
+        CMakeLists.txt</h4>
+        <p></p>
+    </li>
+    <h4><li>
+        CMakeLists.txt</h4>
+        <p></p>
+    </li>
+    <h4><li>
+        CMakeLists.txt</h4>
+        <p></p>
+    </li>
+    <h4><li>
+        CMakeLists.txt</h4>
+        <p></p>
+    </li>
+    <h4><li>
+        CMakeLists.txt</h4>
+        <p></p>
+    </li>
+    <h4><li>
+        CMakeLists.txt</h4>
+        <p></p>
+    </li>
+    <h4><li>
         CMakeLists.txt</h4>
         <p></p>
     </li>
