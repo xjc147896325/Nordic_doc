@@ -134,7 +134,28 @@ home/app
     <li>持续集成（Continuous Integration——CI）设置（setup）</li>    
 </ul>
 <h2>创建一个应用</h2>
-    <p>按照以下步骤去创建一个新的应用文件夹。（<strike>参考<a href="https://github.com/zephyrproject-rtos/example-application">例程</a>在它自己的Git库或者<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/samples/index.html#samples-and-demos">参考和测试版</a>为了已存在的应用被提供作为Zephyr的一部分，参考独立的应用存储库。</strike>（请参阅<a href="https://github.com/zephyrproject-rtos/example-application">示例应用程序</a>存储库以获取其自己的 Git 存储库中的参考独立应用程序，或参阅作为 Zephyr 一部分提供的现有应用程序的<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/samples/index.html#samples-and-demos">示例和演示</a>。）</p>
+<p>按照以下步骤去创建一个新的应用文件夹。（<strike>参考<a href="https://github.com/zephyrproject-rtos/example-application">例程</a>在它自己的Git库或者<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/samples/index.html#samples-and-demos">参考和测试版</a>为了已存在的应用被提供作为Zephyr的一部分，参考独立的应用存储库。</strike>（请参阅<a href="https://github.com/zephyrproject-rtos/example-application">示例应用程序</a>存储库以获取其自己的 Git 存储库中的参考独立应用程序，或参阅作为 Zephyr 一部分提供的现有应用程序的<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/samples/index.html#samples-and-demos">示例和演示</a>。）</p>
+<ol>
+    <li>
+        <p>创建一个新的应用目录在你的工作站电脑，在Zephyr基础目录之外。通常你需要在你用户的根目录的某个位置创建它。</p>
+        <p>例如，在Unix的shell或者Windows的cmd.exe提示符下，导航到要创建应用程序的位置，然后键入：</p>
+        <pre>mkdir app</pre>
+        <p><b>警告：</b></p>
+        <p>构建Zephyr或者创建一个应用程序在<strike>一个无论在哪个路径</strike>路径上任意位置中有着空格的文件夹是不被支持的。因此<pre>C:\Users\YourName\app</pre>这种Windows路径是可以的，但是<pre>C:\Users\Your Name\app</pre>是不行的</p>
+    </li>
+    <li>
+        <p>推荐所有的应用程序的源码放置在一个叫做src的子目录下。这使得更容易区别于项目文件和源码。</p>
+        <p>继续先前的例子，键入：</p>
+        <pre>cd app
+mkdir src</pre>
+    </li>
+    <li>
+        
+    </li>
+    <li>
+        
+    </li>
+</ol>
 <p></p>
 <p></p>
 <p></p>
