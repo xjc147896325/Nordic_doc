@@ -1,4 +1,6 @@
-<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/application/index.html#important-build-vars">源文件</a>
+<p><a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/application/index.html#important-build-vars">源文件</a></p>
+<p>【】中的文字是谷歌翻得。</p>
+
 <hr>
 
 <h2></h2>
