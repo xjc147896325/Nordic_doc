@@ -150,6 +150,30 @@ home/app
 mkdir src</pre>
     </li>
     <li>
+        <p>把你的源码放在src子目录下。在这个例程中，我们将会假定你创建了一个叫src/main.c的文件。</p>
+    </li>
+    <li>
+        <p>创建一个叫CMakelist.txt的文件在app目录下，内容如下：</p>
+        <pre># Find Zephyr. This also loads Zephyr's build system.
+cmake_minimum_required(VERSION 3.13.1)
+find_package(Zephyr)
+project(my_zephyr_app)
+# Add your source file to the "app" target. This must come after
+# find_package(Zephyr) which defines the target.
+target_sources(app PRIVATE src/main.c)</pre>
+        <p>find_package(Zephyr)设置最低的CMake版本并且<strike>进</strike>引入Zephyr的构建系统，<strike>那个</strike>这会创建一个叫app的Cmake目标（参考<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/zephyr_cmake_package.html#cmake-pkg">Zephyr Cmake包</a>）。<strike>你如何引入他们在构建中向这个目标添加源码</strike>将源添加到此目标是将它们包含在构建中的方式。</p>
+        <p><b>注意:</b></p>
+        <p>cmake_minimum_required()也被Zephyr的包调用。这2个版本中的最新版将会被Cmake强迫执行。
+    </li>
+    <li>
+        <p>设置Kconfig的配置选项。参考<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/application/index.html#application-kconfig">Kconfig配置</a></p>
+    </li>
+    <li>
+        <p>配置任意你的应用需要的覆盖设备树（devicetree overlays）。参考<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/dts/howtos.html#set-devicetree-overlays">设置覆盖设备树</a></p>
+        <p><b>注意：</b></p>
+        <p>include($ENV{ZEPHYR_BASE}/cmake/app/boilerplate.cmake No_POLICE_SPOCE)仍然对更老的应用有着向下兼容性的支持。<strike>包括直接在例子中的boilerplate.cmake仍需去跑source zephyr-env.sh或者执行（execute）zephyr-env.cmd在构建应用前</strike>在示例中直接包含boilerplate.cmake 仍然需要在构建应用程序之前运行source zephyr-env.sh 或执行（execute）zephyr-env.cmd。</p>
+    </li>
+    <li>
         
     </li>
     <li>
