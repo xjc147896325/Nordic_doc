@@ -4,7 +4,6 @@
 <h2></h2>
 <h2></h2>
 <h2></h2>
-<h2></h2>
 <h2>总览</h2>
 <p>zephyr的系统构建基于CMake</p>
 <p>这个构建系统以应用为核心，并且需要基于zephyr的应用去初始化内核的源码树。(application-centric——以应用为核心的）应用构建<strike>包含控制配置和创建程序的应用和内核自己</strike>控制应用程序和Zephyr本身的配置和构建过程，编译他们为一个二进制文件。</p>
@@ -137,7 +136,7 @@ home/app
 <p>按照以下步骤去创建一个新的应用文件夹。（<strike>参考<a href="https://github.com/zephyrproject-rtos/example-application">例程</a>在它自己的Git库或者<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/samples/index.html#samples-and-demos">参考和测试版</a>为了已存在的应用被提供作为Zephyr的一部分，参考独立的应用存储库。</strike>（请参阅<a href="https://github.com/zephyrproject-rtos/example-application">示例应用程序</a>存储库以获取其自己的 Git 存储库中的参考独立应用程序，或参阅作为 Zephyr 一部分提供的现有应用程序的<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/samples/index.html#samples-and-demos">示例和演示</a>。）</p>
 <ol>
     <li>
-        <p>创建一个新的应用目录在你的工作站电脑，在Zephyr基础目录之外。通常你需要在你用户的根目录的某个位置创建它。</p>
+        <p>创建一个新的应用目录在你的工作站电脑，在Zephyr基础目录之外。通常你需要在你用户的<strike>根</strike>主目录的某个位置创建它。</p>
         <p>例如，在Unix的shell或者Windows的cmd.exe提示符下，导航到要创建应用程序的位置，然后键入：</p>
         <pre>mkdir app</pre>
         <p><b>警告：</b></p>
@@ -173,28 +172,37 @@ target_sources(app PRIVATE src/main.c)</pre>
         <p><b>注意：</b></p>
         <p>include($ENV{ZEPHYR_BASE}/cmake/app/boilerplate.cmake No_POLICE_SPOCE)仍然对更老的应用有着向下兼容性的支持。<strike>包括直接在例子中的boilerplate.cmake仍需去跑source zephyr-env.sh或者执行（execute）zephyr-env.cmd在构建应用前</strike>在示例中直接包含boilerplate.cmake 仍然需要在构建应用程序之前运行source zephyr-env.sh 或执行（execute）zephyr-env.cmd。</p>
     </li>
-    <li>
-        
-    </li>
-    <li>
-        
-    </li>
 </ol>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
+<h2>设置变量</h2>
+<h3>Option1：仅限一次</h3>
+<p>设置环境变量MY_VARIABLE为foo为了你当前窗口终端的剩余时间【在当前终端窗口的生命周期内将环境变量 MY_VARIABLE 设置为 foo：】。</p>
+<pre>#Linux and macOS
+export MY_VARIABLE=foo
+#Windows
+set MY_VARIABLE=foo</pre>
+<p><b>Warning：</b></p>
+<p>这是最好的实验。如果你关掉你的终端窗口，使用另一个终端窗口或者选项卡（tab）、重启你的电脑等，这个设置将会永远丢失。</p>
+<p>如果你想要持续使用设置，使用Options2或者3是推荐的方案。</p>
+<h3>Option2：在所有terminal</h3>
+<p><b>macOS和Linux：</b></p>
+<p>添加export MY_VARIABLE=foo这行进位于你<strike>根</strike>主目录的shell的启动脚本。对于Bash，通常是~/.bashrc在Linux以及~/.bash_profile在macOS。改变他们的启动脚本不会影响已经启动的shell实例；尝试打开一个新的terminal window去得到新的设置。</p>
+<p><b>Windows：</b></p>
+<p>你可以在cmd.exe中使用setx程序或者第三方（third-party）的Rapid EE程序。</p>
+<p>要使用setx，请键入此命令（type this command），然后关闭terminal window。任何新的cmd.exe窗口的MY_VARIABLE将已经被设为foo。</p>
+<pre>setx MY_VARIABLE foo</pre>
+<p>要install RapidEE，一个免费的（freeware）图形化的（graphical）环境变量编辑器，在一个管理员命令提示符（command prompt）下<a href="https://chocolatey.org/packages/RapidEE">使用Chocolatey</a>：</p>
+<pre>choco install rapidee</pre>
+<p>接着你可以从你的terminal中运行rapidee去启动程序并且设置环境变量。确保使用“User”环境变量区域——否则，你不得不以管理员身份运行RapidEE。也要确保在退出前点击在左上角的保存按钮来保存你的修改。你在RapidEE中的设置将在你打开新的terminal window时始终有效。</p>
+<h3>Option3：使用zephyrrc文件</h3>
+<p>如果你不希望变量的设置对所有你的terminal都有效的话，但是仍旧想去保存读入你正使用的Zephyr的环境值选择这个选项。【如果您不想让所有终端都可以使用该变量的设置，但仍想保存该值以在使用 Zephyr 时加载到您的环境中，请选择此选项。】</p>
+<p><b>macOS和Linux：</b></p>
+<p>创建一个名为~/.zephyrrc的文件，如果不存在的话，然后向里面添加以下行：</p>
+<pre>export MY_VARIABLE=foo</pre>
+<p>为了将这个值恢复到（back into）当前terminal环境中，你必须从主zephyr文件夹中运行source zephyr-env.sh。除此之外，这个脚本来源 ~/.zephyrrc。（Among other things——除其他事项外）</p>
+<p>如果你关掉这个窗口这个值将会丢失，<strike>例如</strike>再次运行source zephyr-env.sh<strike>再一次得到它</strike>以将其恢复。</p>
+<p><b>Windows：</b></p>
+<p>用如Notepad++这种文本编辑器添加set MY_VARIABLE=foo这行进文件%userprofile%\zephyrrc.cmd中并保存该值</p>
+<p>为了将这个值恢复到（back into）当前terminal环境中，当你改变目录至主zephyr目录后，你必须在一个cmd.exe窗口中运行zephyr-env.cmd。除此之外，这个脚本运行%userprofile%\zephyrrc.cmd</p>
 <p></p>
 <p></p>
 <p></p>
