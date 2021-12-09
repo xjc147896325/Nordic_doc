@@ -256,7 +256,25 @@ list(APPEND CONF_FILE "fragment_file2.conf")</pre>
         <p>如果你的应用使用devicetree overlay，你也许需要去设置DTC_OVERLAY_FILE。参考<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/dts/howtos.html#set-devicetree-overlays">Set devicetree overlays</a>。</p>
     </li>
     <li>
-        <p></p>
+        <p>如果你的应用有它自己的kernel配置选项，创建一个Kconfig文件在与你应用的CMakeList.txt相同的目录下。</p>
+        <p>参考<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/build/index.html#kconfig">the Kconfig section of the manual（手册）</a>获取Kconfig文档的细节。</p>
+        <p>一个（不太可能的）高级用例<strike>将取决于</strike>是，如果你的应用<strike>是否</strike>有独特<strike>的与构建配置不一样</strike>的配置选项，这些选项根据构建配置进行不同的设置。</p>
+        <p>如果你仅想为已经存在的Zephyr配置选项设置应用专用的值，参考上面的CONF_FILE描述。</p>
+        <p>像这样构造你的Kconfig文件：</p>
+        <pre># SPDX-License-Identifier: Apache-2.0
+mainmenu "Your Application Name"
+# Your application configuration options go here
+# Sources Kconfig.zephyr in the Zephyr root directory.
+#
+# Note: All 'source' statements work relative to the Zephyr root directory (due
+# to the $srctree environment variable being set to $ZEPHYR_BASE). If you want
+# to 'source' relative to the current Kconfig file instead, use 'rsource' (or a
+# path relative to the Zephyr root).
+source "Kconfig.zephyr"</pre>
+        <p><b>Note</b></p>
+        <p>source中的环境变量描述（statement——描述）被直接拓展的【source 语句中的环境变量是直接展开的】，因此你没必要去定义option env="ZEPHYR_BASE"这样的Kconfig”跳转（bounce——跳转）“符号。如果你用了这样的符号，它必须和环境变量的名字一样。</p>
+        <p>参考<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/build/kconfig/extensions.html#kconfig-extensions">Kconfig extensions</a>获得更多信息。</p>
+        <p>当位于应用目录中，Kconfig文件自动地被探测，但是它也可能被找到<strike>无论在哪</strike>在其他地方，如果CMake的KCONFIG_ROOT变量被设为一个绝对地址。</p>
     </li>
     <li>
         <p></p>
