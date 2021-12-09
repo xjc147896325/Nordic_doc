@@ -5,7 +5,6 @@
 
 <h2></h2>
 <h2></h2>
-<h2></h2>
 <h2>总览</h2>
 <p>zephyr的系统构建基于CMake</p>
 <p>这个构建系统以应用为核心，并且需要基于zephyr的应用去初始化内核的源码树。(application-centric——以应用为核心的）应用构建<strike>包含控制配置和创建程序的应用和内核自己</strike>控制应用程序和Zephyr本身的配置和构建过程，编译他们为一个二进制文件。</p>
@@ -213,9 +212,11 @@ set MY_VARIABLE=foo</pre>
     <li><strike>从zephyrrc文件添加任意的配置，在<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/application/index.html#env-vars-zephyrrc">Options3：使用zephyrrc文件</a>中被描述。</strike>从上面<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/application/index.html#env-vars-zephyrrc">Option 3：使用 zephyrrc 文件</a>中描述的 zephyrrc 文件加载任何设置。</li>
 </ul>
 <p>因此当你需要<strike>他们</strike>任何的设置时你可以随时使用它们</p>
-<p></p>
-<p></p>
-<p></p>
+<h3>Option4：使用Zephyr构建配置CMake包</h3>
+<p>如果你想要让这些你项目中的设置变量在所有用户间共享，那就选择这个设置。</p>
+<p>使用<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/zephyr_cmake_package.html#cmake-build-config-package">Zephyr构建配置CMake包</a>允许你在<strike>目录</strike>存储库中去<strike>确认</strike>提交共享设置，以至于所有用户可以共享它们。</p>
+<p><strike>当你打开一个新的terminal时，有必要关闭正在运行的source zephyr-env.sh和zephyr-env.cmd。</strike>它还消除了在打开新终端时运行 source zephyr-env.sh 或 zephyr-env.cmd 的需要。</p>
+<h2></h2>
 <p></p>
 <p></p>
 <p></p>
