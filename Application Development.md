@@ -216,7 +216,35 @@ set MY_VARIABLE=foo</pre>
 <p>如果你想要让这些你项目中的设置变量在所有用户间共享，那就选择这个设置。</p>
 <p>使用<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/zephyr_cmake_package.html#cmake-build-config-package">Zephyr构建配置CMake包</a>允许你在<strike>目录</strike>存储库中去<strike>确认</strike>提交共享设置，以至于所有用户可以共享它们。</p>
 <p><strike>当你打开一个新的terminal时，有必要关闭正在运行的source zephyr-env.sh和zephyr-env.cmd。</strike>它还消除了在打开新终端时运行 source zephyr-env.sh 或 zephyr-env.cmd 的需要。</p>
-<h2></h2>
+<h2>重要的系统构建变量</h2>
+<p>你可以使用很多变量去控制Zephyr构建系统。这个块描述了很多重要的Zephyr开发者需要知道的东西。</p>
+<p><b>Note</b></p>
+<p>BOARD,CONF_FILE和DTC_OVERLAY_FILE这些变量可以支持3种方式（按优先级的次序）（precedence——优先级）去构建这个系统。</p>
+<ul>
+    <li>通过-D命令行切换west bulid或者cmake调用参数。如果你有着复数的覆盖文件（overlay file 实在不懂），你需要使用<strike>这个引用</strike>引号，“file1.overlay;file2.overlay”</li>
+    <li>作为<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/application/index.html#env-vars">设置变量</a></li>
+    <li>在你的CMakeList.txt作为set(<VARIABLE><VALUE>)指令</li>
+</ul>
+<p></p>
+<ul>
+    <li><p><b>ZEPHYR_BASE</b>:用于构建系统的Zephyr基础变量。fing_package(Zephyr)将会自动的设置<strike>作为CMake的缓存</strike>为缓存的CMake变量。但是ZEPHYR_BASE也可以被设置为一个环境变量为了强制CMake去使用一个特殊的Zephyr装载。</p></li>
+    <li><p><b>BOARD</b>:<strike>选择的构建应用所在的板将使用默认的配置</strike>选择应用程序的构建将用于默认配置的板。<strike>参考内置板的<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/boards/index.html#boards">支持的板</a>有关添加板支持的信息，<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/porting/board_porting.html#board-porting-guide">板子接口指导（我*你🐎，这怎么翻译）</a>为了增加板级支持的信息</strike>有关添加板支持的信息，请参阅内置板的<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/boards/index.html#boards">支持板</a>和<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/porting/board_porting.html#board-porting-guide">板移植指南</a>。</p></li>
+    <li><p><b></b></p></li>
+    <li><p><b></b></p></li>
+    <li><p><b></b></p></li>
+</ul>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
 <p></p>
 <p></p>
 <p></p>
