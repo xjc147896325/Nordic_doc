@@ -205,9 +205,14 @@ set MY_VARIABLE=foo</pre>
 <p><b>Windows：</b></p>
 <p>用如Notepad++这种文本编辑器添加set MY_VARIABLE=foo这行进文件%userprofile%\zephyrrc.cmd中并保存该值</p>
 <p>为了将这个值恢复到（back into）当前terminal环境中，当你改变目录至主zephyr目录后，你必须在一个cmd.exe窗口中运行zephyr-env.cmd。除此之外，这个脚本运行%userprofile%\zephyrrc.cmd</p>
-<p></p>
-<p></p>
-<p></p>
+<p>如果你关掉这个窗口这个值将会丢失，再次运行zephyr-env.cmd以将其恢复。</p>
+<p>这些scripts</p>
+<ul>
+    <li>ZEPHYR_BASE（见下）设置zephyr的文件夹位置。</li>
+    <li>添加一些特定的Zephyr位置（例如zephyr的scripts文件夹）至你的PATH环境变量。</li>
+    <li><strike>从zephyrrc文件添加任意的配置，在<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/application/index.html#env-vars-zephyrrc">Options3：使用zephyrrc文件</a>中被描述。</strike>从上面<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/application/index.html#env-vars-zephyrrc">Option 3：使用 zephyrrc 文件</a>中描述的 zephyrrc 文件加载任何设置。</li>
+</ul>
+<p>因此当你需要<strike>他们</strike>任何的设置时你可以随时使用它们</p>
 <p></p>
 <p></p>
 <p></p>
