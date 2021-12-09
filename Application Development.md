@@ -1,5 +1,6 @@
 <p><a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/application/index.html#important-build-vars">源文件</a></p>
 <p>【】中的文字是谷歌翻得。</p>
+<p>关于overlay file<a href="https://www.jianshu.com/p/ad19a76cac0c">简书的解释</a>，看起来是和Linux挂钩的，盲区，麻烦查缺补漏。</p>
 
 <hr>
 
