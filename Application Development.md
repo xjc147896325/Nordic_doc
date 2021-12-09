@@ -5,7 +5,6 @@
 <hr>
 
 <h2></h2>
-<h2></h2>
 <h2>总览</h2>
 <p>zephyr的系统构建基于CMake</p>
 <p>这个构建系统以应用为核心，并且需要基于zephyr的应用去初始化内核的源码树。(application-centric——以应用为核心的）应用构建<strike>包含控制配置和创建程序的应用和内核自己</strike>控制应用程序和Zephyr本身的配置和构建过程，编译他们为一个二进制文件。</p>
@@ -237,8 +236,35 @@ set MY_VARIABLE=foo</pre>
     <li><p><b>DTC_OVERLAY_FILE</b>：使用一个或多个设备树覆盖文件。复数的文件可以被分号或者空格分隔。参考<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/dts/howtos.html#set-devicetree-overlays">set devicetree overlays</a>的例程并且参考<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/dts/intro.html#devicetree-intro">Introduction to devicetree</a>获得关于Zephyr和设备树的信息</p></li>
     <li><p><b>ZEPHYR_MODULES</b>：一个CMake列表包含源码、Kconfig等位于的额外目录的绝对路径。被使用于应用的构建中。参考<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/modules.html#modules">Modules(External projects)</a>获取更多细节。</p></li>
 </ul>
-<p></p>
-<p></p>
+<h2>应用CMakeList.txt</h2>
+<p>每个应用必须要含有一个CMakeList.txt文件，这个文件是一个构建系统的入口点（entry point）、顶层。最终的zephyr.elf镜像包含应用和Kernel lib.</p>
+<p>这节讲了在你的CMakeList.txt里你可以做什么。确保按顺序执行下面的步骤。</p>
+<ol>
+    <li><ul>
+        <li><p>任何先前在CMake缓存中被使用的值拥有最高优先级。【由 CMake 缓存确定的任何先前使用的值具有最高优先级。】这确保了你无法在设置构建选项时去构建一个不同的BOARD值。【这可确保您不会尝试使用与构建配置步骤中设置的 BOARD 值不同的 BOARD 值运行构建。】</p></li>
+        <li><p>使用-DBOARD=YOUR_BOARD在CMake命令行被设置的任何值（直接或间接通过west build）将<strike>在再一次使用时</strike>被检查和使用。</p></li>
+        <li><p>如果一个<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/application/index.html#env-vars">环境变量</a>BOARD被设置，这个值将在之后被使用。【如果设置了环境变量 BOARD，则将使用其值。】</p></li>
+        <li><p>最后，如果你在这个<strike>教程</strike>步骤设置了你应用的CMakeList.txt里的BOARD值，它将会被使用。</p></li>
+    </ul></li>
+    <li>
+        <p>如果你的应用使用了一个或多个配置文件或，<strike>除了</strike>而不是平常的prj.conf（或者prj_YOUR_BOARD.conf，YOUR_BOARD是板名），<strike>添加行来设置这些适当的</strike>请适当的向这些文件添加设置的CONF_FILE变量行。如果输入复数文件名，用单个空格或者分号分割开。CMake列表可以被设置去构建配置段文件以一种模块化的方式，当你想要避免<strike>在一个独立的地方</strike>在单个位置设置CONF_FILE。例如：</p>
+        <pre>set(CONF_FILE "fragment_file1.conf")
+list(APPEND CONF_FILE "fragment_file2.conf")</pre>
+        <p>参考<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/build/kconfig/setting.html#initial-conf">The Initial Configuration</a>以获得更多信息。</p>
+    </li>
+    <li>
+        <p>如果你的应用使用devicetree overlay，你也许需要去设置DTC_OVERLAY_FILE。参考<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/dts/howtos.html#set-devicetree-overlays">Set devicetree overlays</a>。</p>
+    </li>
+    <li>
+        <p></p>
+    </li>
+    <li>
+        <p></p>
+    </li>
+    <li>
+        <p></p>
+    </li>
+</ol>
 <p></p>
 <p></p>
 <p></p>
