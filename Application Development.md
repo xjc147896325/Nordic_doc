@@ -277,10 +277,25 @@ source "Kconfig.zephyr"</pre>
         <p>当位于应用目录中，Kconfig文件自动地被探测，但是它也可能被找到<strike>无论在哪</strike>在其他地方，如果CMake的KCONFIG_ROOT变量被设为一个绝对地址。</p>
     </li>
     <li>
-        <p></p>
+        <p>在上面步骤任意一行之后，在新的一行指定需要Zephyr的应用：</p>
+		<pre>find_package(Zephyr)
+project(my_zephyr_app)</pre>
+		<p><b>Note</b></p>
+		<p>find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})可以被用于如果强制特定的Zephyr安装程序，通过清楚的（explicitly）设置了被支持的ZEPHYR_BASE环境变量。【如果应该支持通过显式设置 ZEPHYR_BASE 环境变量来强制执行特定的 Zephyr 安装，则可以使用 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})。】所有的Zephyr例程都支持ZEPHYR_BASE环境变量。</p>
     </li>
     <li>
-        <p></p>
+        <p>现在添加任意的应用程序源码文件在‘app’目标lib中，每个都在他们自己的行，比如：</p>
+		<pre>target_sources(app PRIVATE src/main.c)</pre>
+		<p>下面是一个简单的CMakeList.txt例子：</p>
+		<pre>set(BOARD qemu_x86)
+find_package(Zephyr)
+project(my_zephyr_app)
+target_sources(app PRIVATE src/main.c)</pre>
+		<p>CMake属性（property）的HEX_FILES_TO_MERGE<strike>杠杆率（leverage）</strike>,通过Kconfig和CMake提供应用的配置，使你额外的hex文件与生成的hex文件<strike>融合</strike>合并生成Zephyr应用，例如：</p>
+		<pre>set_property(GLOBAL APPEND PROPERTY HEX_FILES_TO_MERGE
+    ${app_bootloader_hex}
+    ${PROJECT_BINARY_DIR}/${KERNEL_HEX_NAME}
+    ${app_provision_hex})</pre>
     </li>
 </ol>
 <p></p>
