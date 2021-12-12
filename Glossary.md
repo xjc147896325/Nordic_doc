@@ -1,3 +1,6 @@
+<p><a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/nrf/glossary.html">refer to</a></p>
+
+
 <h1>Glossary（词汇）</h1>
 <h3>Access Port Protection(APPROTECT)——访问端口保护</h3>
 <p>一个寄存器被用来防止读写访问到所有的CPU寄存器和内存映射地址（memory-mapped addresses）。</p>
