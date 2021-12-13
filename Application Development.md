@@ -313,7 +313,7 @@ target_sources(app PRIVATE src/main.c)</pre>
 <p>特定于应用程序的源代码文件通常被放在应用的src目录下。如果这个应用增加了很多的文件，开发者就可以用在src下的子目录组织他们，无论需要多深。</p>
 <p><strike>特定于应用的源码不能【不应该】使用符号作为前缀，那是为kernel所有者所保留的</strike>特定于应用程序的源代码不应使用由内核保留供其自己使用的符号名称前缀。参考<a href="https://github.com/zephyrproject-rtos/zephyr/wiki/Naming-Conventions">Naming conventions</a>获取更多信息。</p>
 <h3>Third-party Library Code——第三方库代码</h3>
-<p>他可能被在应用的src目录之外构建库代码，但是应用和库代码都<strike>是服务于</strike>面向同样的应用二进制接口（Application Binary Interface——ABI），这是很重要的。<strike>绝大多数构筑它们的编译标志（compiler flags）</sreike>在大多数架构上，都有编译器标志来控制 ABI目标,使得库和应用都有着某一个/些（certain）<strike>普通</strike>共同的的编译标志，这很重要【因此库和应用程序具有某些共同的编译器标志很重要】。这可能也对为了访问Zephyr kernel的头文件的胶水代码很有用的【粘合代码访问 Zephyr 内核头文件也可能很有用】。</p>
+<p>他可能被在应用的src目录之外构建库代码，但是应用和库代码都<strike>是服务于</strike>面向同样的应用二进制接口（Application Binary Interface——ABI），这是很重要的。<strike>绝大多数构筑它们的编译标志（compiler flags）</strike>在大多数架构上，都有编译器标志来控制 ABI目标,使得库和应用都有着某一个/些（certain）<strike>普通</strike>共同的的编译标志，这很重要【因此库和应用程序具有某些共同的编译器标志很重要】。这可能也对为了访问Zephyr kernel的头文件的胶水代码很有用的【粘合代码访问 Zephyr 内核头文件也可能很有用】。</p>
 <p>为了使它更容易去综合【集成】第三方组件（component），Zephyr构建系统已经定义了给应用构建脚本访问zephyr编译选项的CMake功能【函数】。这个功能【函数】被证明【记录】（document）和定义在<a href="https://github.com/nrfconnect/sdk-zephyr/blob/main/cmake/extensions.cmake">cmake/extenions.cmake</a>并且遵循命名规定（convention）zephyr_get_(type)_(format)。</p>
 <p>以下（following）变量将经常需要被导出至第三方构建系统。</p>
 <ul>
