@@ -323,8 +323,8 @@ target_sources(app PRIVATE src/main.c)</pre>
 <p><a href="https://github.com/nrfconnect/sdk-zephyr/blob/main/samples/application_development/external_lib">samples/application_development/external_lib</a>是一个示范（demonstrate）一些功能的示例项目。</p>
 <h2>Building an Application——构建一个程序应用</h2>
 <p>Zephyr构建系统编译并且链接在一个独立应用img中的应用所有组件（component）【Zephyr 构建系统将应用程序的所有组件编译并链接到单个应用程序映像中】，这【该镜像】可以被运行在虚拟硬件或者真是硬件环境中。</p>
-<p></p>
-<p></p>
+<p>像其他基于CMake的系统，构建程序分为（take place）2个阶段（<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/build/index.html#cmake-details">in two stages</a>）进行。首先，建立使用cmake命令行工具组件文件（也被称作一个构建系统）。【首先，构建文件（也称为构建系统）是在指定生成器的同时使用 cmake 命令行工具生成的。】这个生成器定义本地工具构建的构建系统将在第二步中使用。【这个生成器决定了构建系统将在第二阶段使用的原生构建工具。】第二阶段运行原生构建系统工具源文件并且生成一个img。参考位于官方CMake文档中的<a href="https://cmake.org/cmake/help/latest/manual/cmake.1.html#description">CMake introduction</a>以学习更多的概念（concept）。</p>
+<p>尽管默认的Zephyr构建工具west——Zephyr的元工具（meta-tool），他们调用cmake与更下层的在后台的构建工具（ninja和make），你也可以选择去直接调用cmake如果你<strike>觉得更好</strike>愿意。在Linux和macOS中你可以在make和ninja之间选择生成器（i.e. build tools——即构建工具（i.e.——即）），然而（whereas）在Windows下你需要使用ninja，因为make在这个平台不被支持。<strike>通过引导我们可以简明的（simplicity）使用ninja</strike>为简单起见（for simplicity），我们将在本指南中使用 ninja，如果你选择使用west build去构建你的应用，你知道它将默认使用在后台调用ninja。</p>
 <p></p>
 <p></p>
 <p></p>
