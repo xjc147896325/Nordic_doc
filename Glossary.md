@@ -19,9 +19,9 @@
 <h3>Bluetooth® LE Host Layer——BLE主机层</h3>
 <p>BLE协议栈包含（comprise）复数的（非实时）网络以及传输协议，允许应用去与对等设备（peer device）使用标准的、可互用的（interoperable）方法 通讯。【低功耗蓝牙协议栈的一层由多个（非实时）网络和传输协议组成，使应用程序能够以标准和可互操作的方式与对等设备进行通信。】</p>
 <h3>Board——板子</h3>
-<p>在Zephyr和nRFSDK中，板上硬件用结构体（data structure）来描述</p>
-<h3></h3>
-<p></p>
+<p>在Zephyr和nRFSDK中，板上硬件、配置文件以及构建的变体（安全或者非安全的）用结构体（data structure）来描述。【在 Zephyr 和 nRF Connect SDK 中，一种数据结构，用于描述板上的硬件、其配置文件以及构建的变体（安全或非安全）。】</p>
+<h3>Branch——分支</h3>
+<p>一个由提交顺序组成的开发行。【由一系列提交组成的开发线。】</p>
 <h3></h3>
 <p></p>
 <h3></h3>
