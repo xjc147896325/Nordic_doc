@@ -300,7 +300,29 @@ target_sources(app PRIVATE src/main.c)</pre>
 <h2>CMakeCache.txt</h2>
 <p>CMake使用CMakeCatch.txt文件作为固有的键值对（key/value）字符串存储被用于在运行之间缓存值，包括引入编译和构建选项和从属lib【依赖库】路径。这个缓存文件当CMake在一个空文件夹中被运行时被创建。【当 CMake 在空构建文件夹中运行时，会创建此缓存文件。】</p>
 <p>关注更多的CMakeCatch.txt文件细节，参考官方CMake文件<a href="http://cmake.org/runningcmake/">runningcmake</a>。</p>
-<p></p>
+<h2>Application Configuration——应用配置</h2>
+<h3>Kconfig Configuration——Kconfig配置</h3>
+<p>应用配置选项经常在位于应用目录中的pri.conf里被设置。<strike>例如：C++支持被激活</strike>例如，可以通过以下分配启用 C++ 支持：</p>
+<pre>CONFIG_CPLUSPLUS=y</pre>
+<p>参考<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/samples/index.html#samples-and-demos">existing samples</a>是一个开始的好方法。</p>
+<p>参考<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/build/kconfig/setting.html#setting-configuration-values">Setting Kconfig configuration values</a>获得有关设置Kconfig配置值的详细文档。<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/build/kconfig/setting.html#initial-conf">The Initial Configuration</a>这段在同样的页面解释了<strike>初始值是怎么被得到的</strike>如何导出初始配置。参考<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/kconfig/index.html#configuration-options">Configuration Options</a>为了<strike>一个配置选项完成表</strike>有关配置选项的完整列表。参考<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/security/hardening-tool.html#hardening"</a>为了与Kconfig选项关联的安全信息。</p>
+<p><a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/build/index.html#kconfig">Kconfig section of the manual</a>的其他页面也值得被浏览，尤其是当你计划增加新的配置选项时。</p>
+<h3>Device Overlays</h3>
+<p>参考<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/dts/howtos.html#set-devicetree-overlays">Set devicetree overlays</a>。</p>
+<h2>Application-Specific Code——特定于应用程序的代码</h2>
+<p>特定于应用程序的源代码文件通常被放在应用的src目录下。如果这个应用增加了很多的文件，开发者就可以用在src下的子目录组织他们，无论需要多深。</p>
+<p><strike>特定于应用的源码不能【不应该】使用符号作为前缀，那是为kernel所有者所保留的</strike>特定于应用程序的源代码不应使用由内核保留供其自己使用的符号名称前缀。参考<a href="https://github.com/zephyrproject-rtos/zephyr/wiki/Naming-Conventions">Naming conventions</a>获取更多信息。</p>
+<h3>Third-party Library Code——第三方库代码</h3>
+<p>他可能被在应用的src目录之外构建库代码，但是应用和库代码都<strike>是服务于</strike>面向同样的应用二进制接口（Application Binary Interface——ABI），这是很重要的。<strike>绝大多数构筑它们的编译标志（compiler flags）</sreike>在大多数架构上，都有编译器标志来控制 ABI目标,使得库和应用都有着某一个/些（certain）<strike>普通</strike>共同的的编译标志，这很重要【因此库和应用程序具有某些共同的编译器标志很重要】。这可能也对为了访问Zephyr kernel的头文件的胶水代码很有用的【粘合代码访问 Zephyr 内核头文件也可能很有用】。</p>
+<p>为了使它更容易去综合【集成】第三方组件（component），Zephyr构建系统已经定义了给应用构建脚本访问zephyr编译选项的CMake功能【函数】。这个功能【函数】被证明【记录】（document）和定义在<a href="https://github.com/nrfconnect/sdk-zephyr/blob/main/cmake/extensions.cmake">cmake/extenions.cmake</a>并且遵循命名规定（convention）zephyr_get_<type>_<format>。</p>
+<p>以下（following）变量将经常需要被导出至第三方构建系统。</p>
+<ul>
+    <li>CMAKE_C_COMPILER、CMAKE_AR</li>
+    <li>ARCH和BOARD，以及（together）用于识别Zephyr kernel版本的几个变量。</li>
+</ul>
+<p><a href="https://github.com/nrfconnect/sdk-zephyr/blob/main/samples/application_development/external_lib">samples/application_development/external_lib</a>是一个示范（demonstrate）一些功能的示例项目。</p>
+<h2>Building an Application——构建一个程序应用</h2>
+<p>Zephyr构建系统编译并且链接在一个独立应用img中的应用所有组件（component）【Zephyr 构建系统将应用程序的所有组件编译并链接到单个应用程序映像中】，这【该镜像】可以被运行在虚拟硬件或者真是硬件环境中。</p>
 <p></p>
 <p></p>
 <p></p>
