@@ -224,7 +224,7 @@ set MY_VARIABLE=foo</pre>
     <li>通过-D命令行切换west bulid或者cmake调用参数。如果你有着复数的覆盖文件
     （overlay file 实在不懂），你需要使用<strike>这个引用</strike>引号，“file1.overlay;file2.overlay”</li>
     <li>作为<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/application/index.html#env-vars">设置变量</a></li>
-    <li>在你的CMakeList.txt作为set(<VARIABLE><VALUE>)指令</li>
+    <li>在你的CMakeList.txt作为set((VARIABLE)(VALUE))指令</li>
 </ul></pre>
 <ul>
     <li><p><b>ZEPHYR_BASE</b>:用于构建系统的Zephyr基础变量。fing_package(Zephyr)将会自动的设置<strike>作为CMake的缓存</strike>为缓存的CMake变量。但是ZEPHYR_BASE也可以被设置为一个环境变量为了强制CMake去使用一个特殊的Zephyr装载。</p></li>
@@ -314,7 +314,7 @@ target_sources(app PRIVATE src/main.c)</pre>
 <p><strike>特定于应用的源码不能【不应该】使用符号作为前缀，那是为kernel所有者所保留的</strike>特定于应用程序的源代码不应使用由内核保留供其自己使用的符号名称前缀。参考<a href="https://github.com/zephyrproject-rtos/zephyr/wiki/Naming-Conventions">Naming conventions</a>获取更多信息。</p>
 <h3>Third-party Library Code——第三方库代码</h3>
 <p>他可能被在应用的src目录之外构建库代码，但是应用和库代码都<strike>是服务于</strike>面向同样的应用二进制接口（Application Binary Interface——ABI），这是很重要的。<strike>绝大多数构筑它们的编译标志（compiler flags）</sreike>在大多数架构上，都有编译器标志来控制 ABI目标,使得库和应用都有着某一个/些（certain）<strike>普通</strike>共同的的编译标志，这很重要【因此库和应用程序具有某些共同的编译器标志很重要】。这可能也对为了访问Zephyr kernel的头文件的胶水代码很有用的【粘合代码访问 Zephyr 内核头文件也可能很有用】。</p>
-<p>为了使它更容易去综合【集成】第三方组件（component），Zephyr构建系统已经定义了给应用构建脚本访问zephyr编译选项的CMake功能【函数】。这个功能【函数】被证明【记录】（document）和定义在<a href="https://github.com/nrfconnect/sdk-zephyr/blob/main/cmake/extensions.cmake">cmake/extenions.cmake</a>并且遵循命名规定（convention）zephyr_get_<type>_<format>。</p>
+<p>为了使它更容易去综合【集成】第三方组件（component），Zephyr构建系统已经定义了给应用构建脚本访问zephyr编译选项的CMake功能【函数】。这个功能【函数】被证明【记录】（document）和定义在<a href="https://github.com/nrfconnect/sdk-zephyr/blob/main/cmake/extensions.cmake">cmake/extenions.cmake</a>并且遵循命名规定（convention）zephyr_get_(type)_(format)。</p>
 <p>以下（following）变量将经常需要被导出至第三方构建系统。</p>
 <ul>
     <li>CMAKE_C_COMPILER、CMAKE_AR</li>
@@ -325,6 +325,84 @@ target_sources(app PRIVATE src/main.c)</pre>
 <p>Zephyr构建系统编译并且链接在一个独立应用img中的应用所有组件（component）【Zephyr 构建系统将应用程序的所有组件编译并链接到单个应用程序映像中】，这【该镜像】可以被运行在虚拟硬件或者真是硬件环境中。</p>
 <p>像其他基于CMake的系统，构建程序分为（take place）2个阶段（<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/build/index.html#cmake-details">in two stages</a>）进行。首先，建立使用cmake命令行工具组件文件（也被称作一个构建系统）。【首先，构建文件（也称为构建系统）是在指定生成器的同时使用 cmake 命令行工具生成的。】这个生成器定义本地工具构建的构建系统将在第二步中使用。【这个生成器决定了构建系统将在第二阶段使用的原生构建工具。】第二阶段运行原生构建系统工具源文件并且生成一个img。参考位于官方CMake文档中的<a href="https://cmake.org/cmake/help/latest/manual/cmake.1.html#description">CMake introduction</a>以学习更多的概念（concept）。</p>
 <p>尽管默认的Zephyr构建工具west——Zephyr的元工具（meta-tool），他们调用cmake与更下层的在后台的构建工具（ninja和make），你也可以选择去直接调用cmake如果你<strike>觉得更好</strike>愿意。在Linux和macOS中你可以在make和ninja之间选择生成器（i.e. build tools——即构建工具（i.e.——即）），然而（whereas）在Windows下你需要使用ninja，因为make在这个平台不被支持。<strike>通过引导我们可以简明的（simplicity）使用ninja</strike>为简单起见（for simplicity），我们将在本指南中使用 ninja，如果你选择使用west build去构建你的应用，你知道它将默认使用在后台调用ninja。</p>
+<p>让我们为reel_board构建一个Hello World实例作为例子：</p>
+<p>使用west：</p>
+<pre>west build -b reel_board samples/hello_world</pre>
+<p>使用CMake和ninja：</p>
+<pre># Use cmake to configure a Ninja-based buildsystem:
+cmake -B build -GNinja -DBOARD=reel_board samples/hello_world
+# Now run ninja on the generated build system:
+ninja -C build</pre>
+<p>在Linux和macOS中，你也可以用make代替ninja去构建。</p>
+<p>使用west：</p>
+<ul>
+    <li>仅一次使用make，添加-- -G"Unix Makefiles"进west构建命令行；参考<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/west/build-flash-debug.html#west-building-generator">west build</a>文档获得例子。</li>
+    <li>从现在开始默认使用make，运行west config build.generator "Unix Makefiles"。</li>
+</ul>
+<p>使用CMake目录：</p>
+<pre># Use cmake to configure a Make-based buildsystem:
+cmake -B build -DBOARD=reel_board samples/hello_world
+# Now run ninja on the generated build system:
+make -C build</pre>
+<h3>Basics——基础</h3>
+<h5>Note:</h5>
+<p>在下面的例子里，west被用在west的工作空间之外。为了实现这样的效果，你必须设置ZEPHYR_BASE环境变量去指明你的zephyr git目录路径，使用一种位于<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/application/index.html#env-vars">Environment Variables</a>页面的方法之一。</p>
+<ol>
+    <li>进入（navigate——航行）应用目录(home)/app。</li>
+    <li>
+	<p>输入以下命令行参数来为专门的板子构建应用的zephyr.elf img：</p>
+	<p>使用west：</p>
+	    <pre>west build -b (board)</pre>
+	<p>使用CMake和ninja：</p>
+	    <pre>mkdir build && cd build
+# Use cmake to configure a Ninja-based buildsystem:
+cmake -GNinja -DBOARD=(board)..
+# Now run ninja on the generated build system:
+ninja
+	<p>如果有需求（desire——欲望），你可以在交互（alternate）【备用的】.conf文件中使用CONF_FILE参数来设置特定的配置去构建应用。这些设置将覆盖应用中的.config文件或它默认的.conf文件的设置。例如：</p>
+	<p>使用west：</p>
+<pre>west build -b (board) -- -DCONF_FILE=pri.alternate.conf</pre>
+	<p>使用CMake和ninja：</p>
+<pre>mkdir build && cd build
+cmake -GNinja -DBOARD=(board) -DCONF_FILE=prj.alternate.conf..
+ninja</pre>
+	<p>在先前【上一节】的描述中，你可以<strike>替换</strike>选择去永久性的（permanently）设置板子和配置设置通过导出BOARD和CONF_FILE环境变量或者在你的CMakelinst.txt使用set()陈述【语句】（statement）设置他们的值。此外，west允许你去<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/west/build-flash-debug.html#west-building-config">set a default board</a>。</p>
+    </li>
+</ol>
+<h3>Build Directory Contents——创建目录内容</h3>
+<p>当使用Ninja生成器去创建如下目录：</p>
+<pre>(home)/app/build
+├── build.ninja
+├── CMakeCache.txt
+├── CMakeFiles
+├── cmake_install.cmake
+├── rules.ninja
+└── zephyr</pre>
+<p>最显著的（notable）文件在构建目录中是：</p>
+<ul>
+    <li>build.ninja，可以被调用去创建应用。</li>
+    <li>一个zephyr目录，是生成构建系统的工作目录，也是大多数生成的文件被创建与储存的地方。</li>
+</ul>
+<p>在运行ninja后，如下的构建输出文件将被写入创建目录的zephyr子目录中。（这不是Zephyr基础目录，它包含了Zephyr源码等并且在上面被描述【如上所述】。）</p>
+<ul>
+    <li>
+	    <p>.config，包含被使用与创建应用的配置设置。</p>
+	    <h5>Note:</h5>
+	    <p>先前的.config的版本被保存于.config.old中，<strike>无论该配置何时被更新</strike>，每当更新配置时。这是为了方便起见，因为这会使新旧版本的对比变得方便（convenience&handy——方便）。</p>
+	</li>
+    <li>各种obj文件（.o文件和.a文件）包含编译的kernel和应用代码。</li>
+    <li>包含最终联合/接（combine——联合、使结合）的应用和kernel二进制文件zephyr.elf。其他的二进制<strike>文件</strike>输出如.hex、.bin等支持的输出格式。</li>
+</ul>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
 <p></p>
 <p></p>
 <p></p>
