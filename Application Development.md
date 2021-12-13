@@ -4,7 +4,6 @@
 
 <hr>
 
-<h2></h2>
 <h2>总览</h2>
 <p>zephyr的系统构建基于CMake</p>
 <p>这个构建系统以应用为核心，并且需要基于zephyr的应用去初始化内核的源码树。(application-centric——以应用为核心的）应用构建<strike>包含控制配置和创建程序的应用和内核自己</strike>控制应用程序和Zephyr本身的配置和构建过程，编译他们为一个二进制文件。</p>
@@ -298,8 +297,9 @@ target_sources(app PRIVATE src/main.c)</pre>
     ${app_provision_hex})</pre>
     </li>
 </ol>
-<p></p>
-<p></p>
+<h2>CMakeCache.txt</h2>
+<p>CMake使用CMakeCatch.txt文件作为固有的键值对（key/value）字符串存储被用于在运行之间缓存值，包括引入编译和构建选项和从属lib【依赖库】路径。这个缓存文件当CMake在一个空文件夹中被运行时被创建。【当 CMake 在空构建文件夹中运行时，会创建此缓存文件。】</p>
+<p>关注更多的CMakeCatch.txt文件细节，参考官方CMake文件<a href="http://cmake.org/runningcmake/">runningcmake</a>。</p>
 <p></p>
 <p></p>
 <p></p>
