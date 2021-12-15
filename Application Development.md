@@ -393,7 +393,7 @@ ninja</pre>
     <li>各种obj文件（.o文件和.a文件）包含编译的kernel和应用代码。</li>
     <li>包含最终联合/接（combine——联合、使结合）的应用和kernel二进制文件zephyr.elf。其他的二进制<strike>文件</strike>输出如.hex、.bin等支持的输出格式。</li>
 </ul>
-<h2>Rebuilding an Application——再构建一个应用</h2>
+<h3>Rebuilding an Application——再构建一个应用</h3>
 <p>当更改经常被测试时，应用开发经常会变得很快。【当不断测试更改时，应用程序开发通常是最快的。】当程序变得更复杂时，经常性地再构建你的程序会使得debug变得更轻松。【随着应用程序变得更加复杂，经常重建应用程序可以减少调试的痛苦。】这是个好点子——再构建并且测试在任何主要改变了应用源码文件、CMakeList.txt文件或者配置设置时。【在对应用程序的源文件、CMakeLists.txt 文件或配置设置进行任何重大更改后，重新构建和测试通常是个好主意。】</p>
 <p><b>Important：</b></p>
 <p>Zephyr构建系统仅再构建应用img潜在被改变影响的部分，重构建一个应用经常是比第一次构建快很多。</p>
