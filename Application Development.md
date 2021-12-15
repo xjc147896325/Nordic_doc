@@ -1,6 +1,7 @@
 <p><a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/application/index.html#important-build-vars">源文件</a></p>
 <p>【】中的文字是谷歌翻得。</p>
 <p>关于overlay file<a href="https://www.jianshu.com/p/ad19a76cac0c">简书的解释</a>，看起来是和Linux挂钩的，盲区，麻烦查缺补漏。</p>
+<p>关于QEMU<a href="https://zh.wikipedia.org/wiki/QEMU">Wiki</a>的解释，<a href="https://baike.baidu.com/item/QEMU/1311178">百度百科</a>的解释，也是未知领域，请务必先行了解。</p>
 <p>命令中的“<”用“(”替代。</p>
 
 <hr>
@@ -446,6 +447,58 @@ ninja</pre>
 	    <pre>ninja flash</pre>
     </li>
 </ol>
+<p>Zephyr构建系统将板子支持文件综合起来并使用专用硬件的工具去刷写Zephyr二进制文件到你的硬件中，然后运行它。</p>
+<p>每次你运行刷写命令（flash command），你的应用会被重新构建并且再刷写一次。</p>
+<p>【如果电路板支持不完整，则可能不支持通过 Zephyr 构建系统进行刷写。】如果你接收到了一个关于flash不支持【flash支持不可用】的错误信息，商讨（consult）【查阅】<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/boards/index.html#boards>your board's documentation</a>为了如何刷写你的板子的额外信息。</p>
+<p><b>Note</b></p>
+<p>当在Linux中开发时，通常需要安装特定板子的udev规则去允许USB设备访问你的板子作为非root用户。如果刷写失败了，查阅你板子的文档去参考【查看】是否是必要的。</p>
+<h3>Running in an Emulator——运行在仿真器中</h3>
+<p>Kernel有着内置的QEMU（仅支持Linux/macOS，不支持WIndows）仿真支持。它允许你去<strike>准确地</strike>虚拟的运行并且测试一个应用，在装载和运行在确切的【实际的】目标硬件之前（或者作为替代（in lieu of——作为...的替代））。跟随这些指示去通过QEMU运行一个应用：</p>
+<ol>
+    <li>
+	<p>在一个QEMU板子上构建你的应用【为 QEMU 板之一构建应用程序】，参考<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/application/index.html#build-an-application">Building an Application</a>。</p>
+	<p>例如，你可以设置BOARD为：</p>
+	<ul>
+	    <li>quem_x86去仿真运行在一个基于X86的板子</li>
+	    <li>qeum_cortex_m3去仿真运行在一个基于ARM cortex M3的板子。</li>
+	</ul>
+    </li>
+    <li>
+	<p>在构建目录，(home)/app/build，中运行这些控制台（console）命令之一去运行Zephyr二进制文件在QEMU中：</p>
+	<pre>west build -t run</pre>
+	<p>or</p>
+	<pre>ninja run</pre>
+    </li>
+    <li>
+	<p>按下Ctrl A，X去停止应用运行于QEMU。</p>
+	<p>应用停止运行并且terminal控制台提示（prompt）重显示。</p>
+    </li>
+</ol>
+<p>每一次你执行（execute）运行命令，你的应用被重构建并且再次运行。</p>
+<p><b>Note</b></p>
+<p>（仅在Linux）如果<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/getting_started/installation_linux.html#zephyr-sdk>Zephyr SDK</a>被安装了，run指令（target）会默认使用SDK的QEMU二进制文件。为了使用另外的QEMU版本，<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/application/index.html#env-vars">set the environment variable</a>QEMU_BIN_PATH到达你想要使用的QEMU二进制文件的路径作为其替代。</p>
+<h2>Application Debugging——应用调试</h2>
+<p>这节是开始使用QEMU调试你的应用的快速上手参考。本节的绝大多数内容已经在<a href="http://wiki.qemu.org/Main_Page">QEMU</a>和<a href="http://www.gnu.org/software/gdb">GNU_Debugger</a>参考手册（manual）中涵盖。</p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
 <p></p>
 <p></p>
 <p></p>
