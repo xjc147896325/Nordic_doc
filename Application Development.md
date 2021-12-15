@@ -428,9 +428,24 @@ ninja</pre>
 <p>检查你板子的文档<strike>的细节</strike>，了解有关它是不是有多个修订版并且支持哪些修订版本的详细信息。</p>
 <p>当目标时一个板子的修订版时，使用的修订版将在CMake配置时被打印，像这样：【当针对电路板修订时，活动修订将在 CMake 配置时打印，如下所示：】</p>
 <pre>-- Board: plank, Revison: 1.5.0</pre>
-<h2></h2>
-<p></p>
-<p></p>
+<h2>Run an Application——运行一个应用</h2>
+<p>一个应用img可以在一个真实板子或者仿真硬件（emulated hardware）上运行。</p>
+<h3>Running on a Board</h3>
+<p>大多数被Zephyr支持的板子允许你使用flash装载一个编译了的二进制文件<strike>使用flash命令去复制</strike>以将这个二进制文件复制到你的板子并运行它。【Zephyr支持的大多数开发板都允许您使用flash目标闪存编译的二进制文件，以将二进制文件复制到开发板并运行它。】按照这些指示去<strike>下载</strike>刷写并且运行应用在真实硬件中：</p>
+<ol>
+    <li>
+        <p>构建你的程序，在<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/application/index.html#build-an-application">Building an Application</a>被描述。</p>
+    </li>
+    <li>
+        <p>确认你的板子和你的主机电脑连接了，通常会通过USB连接。</p>
+    </li>
+    <li>
+        <p>运行他们之一的命令在构建目录中，(home)/app/build，去刷写编译过的Zephyr img并且运行它在你的板子上。</p>
+	    <pre>west flash</pre>
+        <p>or</p>
+	    <pre>ninja flash</pre>
+    </li>
+</ol>
 <p></p>
 <p></p>
 <p></p>
