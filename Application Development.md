@@ -393,11 +393,28 @@ ninja</pre>
     <li>各种obj文件（.o文件和.a文件）包含编译的kernel和应用代码。</li>
     <li>包含最终联合/接（combine——联合、使结合）的应用和kernel二进制文件zephyr.elf。其他的二进制<strike>文件</strike>输出如.hex、.bin等支持的输出格式。</li>
 </ul>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
+<h2>Rebuilding an Application——再构建一个应用</h2>
+<p>当更改经常被测试时，应用开发经常会变得很快。【当不断测试更改时，应用程序开发通常是最快的。】当程序变得更复杂时，经常性地再构建你的程序会使得debug变得更轻松。【随着应用程序变得更加复杂，经常重建应用程序可以减少调试的痛苦。】这是个好点子——再构建并且测试在任何主要改变了应用源码文件、CMakeList.txt文件或者配置设置时。【在对应用程序的源文件、CMakeLists.txt 文件或配置设置进行任何重大更改后，重新构建和测试通常是个好主意。】</p>
+<p><b>Important：</b></p>
+<p>Zephyr构建系统仅再构建应用img潜在被改变影响的部分，重构建一个应用经常是比第一次构建快很多。</p>
+<p>某些时候构建系统不重构建正确的应用因为它重编译一个或多个必须文件时失败了。你可以强制build sys 去重构建整个应用从下列过程中抓取：【您可以使用以下过程强制构建系统从头开始重建整个应用程序：】</p>
+<ol>
+    <li><p>打开一个terminal控制台（console）在你的主机电脑并且进入（navigate——航行）构建目录(home)/app/build。</p></li>
+    <li>
+	    <p>输入以下命令中的一个，<strike>依赖</strike>取决于你使用的west或者cmake去直接删除应用的生成文件，除了包含应用当前配置信息的.config文件</p>
+	    <pre>west build -t clean</pre>
+	    <p>or</p>
+	    <pre>ninja clean</pre>
+	    <p>二选一（alternatively）【或者】，输入以下命令中的一个去删除所有生成文件，包括包含了这些板子类型的当前应用配置信息的.config文件。</p>
+	    <pre>west build -t pristine</pre>
+	    <p>or</p>
+	    <pre>ninja pristine</pre>
+	    <p>如果你使用west，你可以<strike>取得性能上的优点</strike>利用其功能在需要时去自动的<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/west/build-flash-debug.html#west-building-config">make the build folder pristine</a><strike>（制造原本的（pristine）生成文件夹）</strike>（使构建文件夹保持原始状态）当它被需要时。</p>
+    </li>
+    <li>
+	    <p>正常的rebuild应用跟着在<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/application/index.html#build-an-application>Building an Application</a>中的指定（specify）步骤。</p>
+    </li>
+</ol>
 <p></p>
 <p></p>
 <p></p>
