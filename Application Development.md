@@ -1,6 +1,7 @@
 <p><a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/application/index.html#important-build-vars">源文件</a></p>
 <p>【】中的文字是谷歌翻得。</p>
 <p>关于overlay file<a href="https://www.jianshu.com/p/ad19a76cac0c">简书的解释</a>，看起来是和Linux挂钩的，盲区，麻烦查缺补漏。</p>
+<p>命令中的“<”用“(”替代。</p>
 
 <hr>
 
@@ -412,15 +413,22 @@ ninja</pre>
 	    <p>如果你使用west，你可以<strike>取得性能上的优点</strike>利用其功能在需要时去自动的<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/west/build-flash-debug.html#west-building-config">make the build folder pristine</a><strike>（制造原本的（pristine）生成文件夹）</strike>（使构建文件夹保持原始状态）当它被需要时。</p>
     </li>
     <li>
-	    <p>正常的rebuild应用跟着在<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/application/index.html#build-an-application>Building an Application</a>中的指定（specify）步骤。</p>
+	    <p>正常的rebuild应用跟着在<a  href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/application/index.html#build-an-application>Building an Application</a>中的指定（specify）步骤。</p>
     </li>
 </ol>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
+<h3>Building for a board revision——为板子的修订版而构建（？）</h3>
+<p><strike>Zephyr构建系统已经支持有着微小区别的单板的指定的多个硬件修订版。</strike>Zephyr构建系统支持指定单个板的多个硬件修订版本，但变化很小。<strike>使用修订版允许板子支持文件去创建小的调整（adjustment），对一个板子配置，它没有复制所有被描述在<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/porting/board_porting.html#create-your-board-directory>Creat your board directory</a>为每个版本。</strike>使用修订版允许电路板支持文件对电路板配置进行细微调整，而无需复制为每个修订版创建电路板目录中描述的所有文件。</p>
+<p>使用(board)@(revision)<strike>替代原本</strike>而不是普通的(plain——平原）(board)去构建一个特别的修订版。例如：</p>
+<p>使用west：</p>
+<pre>west build -b (board)@(revision)</pre>
+<p>使用CMake和ninja：</p>
+<pre>mkdir build && cd build
+cmake -GNinja -DBOARD=(board)@(revision)..
+ninja</pre>
+<p>检查你板子的文档<strike>的细节</strike>，了解有关它是不是有多个修订版并且支持哪些修订版本的详细信息。</p>
+<p>当目标时一个板子的修订版时，使用的修订版将在CMake配置时被打印，像这样：【当针对电路板修订时，活动修订将在 CMake 配置时打印，如下所示：】</p>
+<pre>-- Board: plank, Revison: 1.5.0</pre>
+<h2></h2>
 <p></p>
 <p></p>
 <p></p>
