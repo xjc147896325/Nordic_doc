@@ -479,6 +479,31 @@ ninja</pre>
 <p>（仅在Linux）如果<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/getting_started/installation_linux.html#zephyr-sdk>Zephyr SDK</a>被安装了，run指令（target）会默认使用SDK的QEMU二进制文件。为了使用另外的QEMU版本，<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/application/index.html#env-vars">set the environment variable</a>QEMU_BIN_PATH到达你想要使用的QEMU二进制文件的路径作为其替代。</p>
 <h2>Application Debugging——应用调试</h2>
 <p>这节是开始使用QEMU调试你的应用的快速上手参考。本节的绝大多数内容已经在<a href="http://wiki.qemu.org/Main_Page">QEMU</a>和<a href="http://www.gnu.org/software/gdb">GNU_Debugger</a>参考手册（manual）中涵盖。</p>
+<p>在这个快速参考中，你将会找到可以帮你快速设置你的debug环境的快捷方式、特定环境变量以及参数。</p>
+<p>最简的方式去debug一个运行在QEMU里的程序的方法是使用GNU Debugger并且通过QEMU在你的开发系统中设置一个本地的GDB服务器。【调试在 QEMU 中运行的应用程序的最简单方法是使用 GNU 调试器并通过 QEMU 在您的开发系统中设置本地 GDB 服务器。】</p>
+<p>你将会需要一个可运行与连接的格式的（Executable and Linkable Format（ELF））二进制img为了debug。【您将需要一个可执行和可链接格式 (ELF) 二进制映像用于调试目的。】构建系统生成img镜像在构建目录中。默认的，kernel二进制文件名字是zephyr.elf。这个名字可以使用Kconfig选项更改。</p>
+<p>我们将会使用标准的1234TCP port去打开一个GDB服务器例子。这个端口号可以被更改为了一个最适合的开发环境的端口。【可以针对最适合开发环境的端口更改此端口号。】</p>
+<p>你可以运行QEMU去监听【侦听】一个gdb连接（gdb connection）在它开始执行任何代码前去debug它。</p>
+<pre>qemu -s -S (image)</pre>
+<p>将设置（setup）Qemu去侦听端口1234并且等待一个GDB连接它。</p>
+<p>上面被使用的选项有着以下的意义：</p>
+<ul>
+    <li>-S是在设置时不会启动CPU；<strike>相当于</strike>相反，你必须键入'c'在监视器里。</li>
+    <li>-s是-gdb tcp::1234的简写:打开一个GDB服务器在TCP的1234端口。</li>
+</ul>
+<p>使用QEMU去debug、开始一个GDB服务器以及等待一个远程连接，运行任一以下的命令在应用构建目录里。【要使用 QEMU 进行调试并启动 GDB 服务器并等待远程连接，请在应用程序的构建目录中运行以下任一命令：】</p>
+<pre>ninja debugserver</pre>
+<p>构建系统将会启动QEMU例子并且在启动时停止CPU以及伴随着GDB服务器例子侦听1234TCP端口。【构建系统将启动一个 QEMU 实例，CPU 在启动时暂停，并且 GDB 服务器实例在 TCP 端口 1234 上侦听。】</p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
 <p></p>
 <p></p>
 <p></p>
