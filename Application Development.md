@@ -546,14 +546,78 @@ Kconfig.board
 Kconfig.defconfig
 pinmux.c
 support/</pre>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
+<p>一旦板子结构在适当的位置，你就可以构建你的应用对准这个板子，通过特定的你用户板信息的位置用“-DBOARD_ROOT”参数对CMake构建系统。【一旦电路板结构就位，您可以通过使用 CMake 构建系统的 -DBOARD_ROOT 参数指定自定义电路板信息的位置来构建针对该电路板的应用程序：】</p>
+<p>使用west：</p>
+<pre>west build -b (board name) -- -DBOARD_ROOT=(path to boards)</pre>
+<p>使用CMake和ninja：</p>
+<pre>cmake -B build -GNinja -DBOARD=(board name) -DBOARD_ROOT=(path to boards).
+ninja -C build</pre>
+<p>这将会使用你自定义的（custom）板子配置并且将会生成Zephyr二进制文件在你的应用目录。</p>
+<p>你也可以定义BOARD_ROOT变量在应用的CMakeList.txt文件中。确保在用find_package(Zephyr ...)拉进Zephyr的boilerplate（样板）之前完成。</p>
+<p><b>Note</b>:</p>
+<p>当在CMakeList.txt中指定BOARD_ROOT时，必须提供一个绝对路径，例如“list(APPEND BOARD_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/(extra-board-root)”。当使用“-DBOARD_ROOT=(board-root)”时，绝对路径和相对路径都可以使用。相对路径起始于应用目录。【相对路径相对于应用程序目录进行处理。】</p>
+<h3>SOC Definitions</h3>
+<p>相似的板子支持，结构和怎样在Zephyr树中维持SOC很相似，例如：【类似于板级支持，其结构类似于在 Zephyr 树中维护 SOC 的方式，例如：】</p>
+<pre>soc
+└── arm
+    └── st_stm32
+            ├── common
+            └── stm32l0</pre>
+<p><a href="https://github.com/nrfconnect/sdk-zephyr/blob/main/soc/Kconfig">soc/Kconfig</a>文件将在Kconfig中创建顶层“SoC/CPU/Configuration Selection”菜单。</p>
+<p>树外的SoC定义可以用SOC_ROOT这个CMake变量被添加进这个菜单。这个变量包含一个由分号分隔的包含SoC支持文件的目录列表</p>
+<p>按照以上的结构，跟着的文件可以被添加更多的SoC在这个菜单中【可以添加以下文件以将更多 SoC 加载到菜单中】。</p>
+<pre>soc
+└── arm
+    └── st_stm32
+            ├── Kconfig
+            ├── Kconfig.soc
+            └── Kconfig.defconfig</pre>
+<p>上面的Kconfig文件可以描述SoC或装载额外的SoC Kconfig文件。</p>
+<p>一个装载stm32l0的例程专用的Kconfig文件使用这种结构：【在此结构中加载 stm32l0 特定 Kconfig 文件的示例：】————————这里应该写错了，原文是stm31l0。</p>
+<pre>soc
+└── arm
+    └── st_stm32
+            ├── Kconfig.soc
+            └── stm32l0
+                └── Kconfig.series</pre>
+<p>在st_stm32/Kcinfig.soc中可以被完成用以下的内容：【可以通过st_stm32/Kconfig.soc中的以下内容来完成：】</p>
+<pre>resource "*/Kconfig.series"</pre>
+<p>一旦SOC结构就位，你可以在CMake构建系统中使用-DSOC_ROOT参数去构建你的应用针对于这个平台，通过指定的你自定义平台信息的位置。【一旦 SOC 结构就位，您就可以通过使用 CMake 构建系统的 -DSOC_ROOT 参数指定自定义平台信息的位置来构建针对此平台的应用程序：】</p>
+<p>使用west：</p>
+<pre>west build -b (board name) -- -DSOC_ROOT=(path to soc) -DBOARD_ROOT=(path to boards)</pre>
+<p>使用CMake和ninja</p>
+<pre>cmake -B build -GNinja -DBOARD=(board name) -DSOC_ROOT=(path to soc) -DBOARD_ROOT=(path to boards).
+ninja -C build.
+<p>这将使用你自定义平台配置并且将会生成Zephyr二进制文件在你的应用目录中。</p>
+<p>参考<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/modules.html#modules-build-settings">Build settings</a>获取信息关于设置SOC_ROOT在模块的zephyr/module.yml文件中。</p>
+<p>或者你可以定义SOC_ROOT变量在应用的CMakeLists.txt文件中。确保在使用find_package(Zephyr...)拉进zephyr实例【样板】之前完成。</p>
+<p><b>Note</b>:</p>
+<p>当在CMakeList.txt中指定SOC_ROOT是，必须提供一个绝对路径，例如“list(APPEND SOC_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/(extra-soc-root)”。当使用“-DSOC_ROOT=(soc-root)”时，绝对路径和相对路径均可被使用。相对路径被处理（treat）相对于应用目录。</p>
+<h3>Devicetree Definitions</h3>
+<p>设备树目录树在APPLICATION_SOURCE_DIR, BOARD_DIR和ZEPHYR_BASE中被找到，但是额外的树，或者DTS_ROOTs，可以通过创建<strike>他们的</strike>这个目录树来被添加：</p>
+<pre>include/
+dts/common/
+dts/arm/
+dts/
+dts/bindings/</pre>
+<p>arm被改变到适当的架构。【其中“arm”更改为适当的架构。】每个目录都是可选的。绑定目录包含绑定和其他的目录包含可以被DTsource引入的文件。【binding 目录包含绑定，其他目录包含可以从 DT 源中包含的文件。】（？——不理解）</p>
+<p>一旦目录结构就位，你可以使用它通过指定他的位置从DTS_ROOT CMake Catch变量。【一旦目录结构就位，您可以通过 DTS_ROOT CMake Cache 变量指定其位置来使用它：】</p>
+<p>使用west：</p>
+<pre>west build -b (board name) -- -DDTS_ROOT=(path to dts root)</pre>
+<p>使用CMake和ninja：</p>
+<pre>cmake -B build -GNinja -DBOARD=(board name) -DDTS_ROOT=(path to dts root).
+ninja -C build</pre>
+<p>你也可以定义变量在应用的CMakeList.txt文件中。确保在使用find_package(Zephyr...)拉进zephyr样板之前完成。</p>
+<p><b>Note</b>:</p>
+<p>当指定DTS_ROOT在CMakeList.txt中，一个绝对路径必须被提供，例如“list(APPEND DTS_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/(extra-dts-root)”。当使用“-DDTS_ROOT=(dts-root)”绝对路径和相对路径都可被使用。相对路径在应用目录中被处理。</p>
+<p>设备树（Devicetree）源码被C预处理器<strike>通过</strike>传递，<strike>以至于<strike>因此你可以引入可以被定位在<strike>一个</strike>DTS_ROOT目录里的文件。<strike>通过转换设备树引入文件有了一个.dtsi扩展</strike>按照惯例，设备树包含文件的扩展名为 .dtsi。</p>
+<p>你也可以使用预处理器（preprocessor）去控制设备树文件的内容，通过直接指定DTS_EXTRA_CPPFLAGS CMake Catch变量：【方法是通过 DTS_EXTRA_CPPFLAGS CMake Cache 变量指定指令（directives）：】</p>
+<p>使用west：</p>
+<pre>west build -b (board name) -- -DDTS_EXTRA_CPPFLAGS=-DTEST_ENABLE_FEATURE<pre>
+<p>使用CMake和ninja：</p>
+<p>cmake -B build -GNinja -DBOARD=(board name) -DDTS_EXTRA_CPPFLAGS=-DTEST_ENABLE_FEATURE.
+ninja -C build</p>
+<h2>Debug with Exlipse（不是很想trans了）</h2>
 <p></p>
 <p></p>
 <p></p>
