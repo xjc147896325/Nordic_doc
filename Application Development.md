@@ -493,26 +493,59 @@ ninja</pre>
 </ul>
 <p>使用QEMU去debug、开始一个GDB服务器以及等待一个远程连接，运行任一以下的命令在应用构建目录里。【要使用 QEMU 进行调试并启动 GDB 服务器并等待远程连接，请在应用程序的构建目录中运行以下任一命令：】</p>
 <pre>ninja debugserver</pre>
-<p>构建系统将会启动QEMU例子并且在启动时停止CPU以及伴随着GDB服务器例子侦听1234TCP端口。【构建系统将启动一个 QEMU 实例，CPU 在启动时暂停，并且 GDB 服务器实例在 TCP 端口 1234 上侦听。】</p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
+<p>构建系统将会启动QEMU例子并且在启动时停止CPU以及伴随着GDB服务器例子侦听1234TCP端口。【构建系统将启动一个 QEMU 实例，CPU 在启动时暂停，并且 GDB 服务器实例在TCP端口1234 上侦听。】</p>
+<p>使用本地的GDB配置.gdbinit可以帮助初始化你的GDB例程【实例】在每次运行时。在这个例程中，初始化的文件指向GDB服务器实例。它在TCP的1234端口配置一个连接和一个在本地主机上的远程目标。这个初始化设置使用kernel的根目录作为参考。</p>
+<p>.gdbinit文件包含以下行：</p>
+<pre>target remote localhost:1234
+dir ZEPHYR_BASE</pre>
+<p><b>Note</b>:</p>
+<p>为你的系统替代正确的<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/application/index.html#important-build-vars">ZEPHYR_BASE</a>。</p>
+<p>运行【执行】应用从与你为gdbinit文件选择的同样的目录中debug。命令可以包含--tui选项去使能使用terminal用户交互【界面】。以下的命令通过gdb连接GDB服务器。命令从elf二进制文件中装载符号表（symbol table）。在这个例程中，elf二进制文件名对应（correspond——符合）zephyr.elf：</p>
+<pre>.../path/to/gdb --tui zephyr.elf</pre>
+<p><b>Note</b>:</p>
+<p>GDB的版本在开发系统中可能不支持--tui选项。请确认你是要的GDB二进制文件从符合在构建二进制文件中被使用tool chain的SDK。【开发系统上的 GDB 版本可能不支持 –tui 选项。 请确保您使用 SDK 中的 GDB 二进制文件，该二进制文件与用于构建二进制文件的工具链相对应。】</p>
+<p>如果你没有使用.gdbinit文件，发行（issue）以下的命令在GDB之内与在1234端口的远程GDB服务器连接。【如果您没有使用 .gdbinit 文件，请在 GDB 中发出以下命令以连接到端口 1234 上的远程 GDB 服务器：】</p>
+<pre>(gdb) target remote localhost:1234</pre>
+<p>最终，下面的命令使用数据显示调试器（Data Displayer Debugger（ddd））连接GDB服务器。这个命令从elf二进制文件中装载符号表（symbol table），在本例中中，是zephyr.elf文件。</p>
+<p><strike>DDD可能不能被替代你的默认的开发系统</strike>默认情况下，您的开发系统中可能未安装 DDD。跟随你的系统指示去装载它。【按照系统说明进行安装。】例如，使用"sudo apt-get install ddd"在Ubuntu系统里。</p>
+<pre>ddd --gdb --debugger "gdb zephyr.elf"</pre>
+<p>这两个命令都执行gdb。命令名可能会根据你使用的tool chain和你的交叉开发工具（cross-development tool）更改。</p>
+<h2>Custom Board, Devicetree and SOC Definitions——用户板子，设备树和SOC定义</h2>
+<p>你开发从不支持zephyr的板子或者平台的例子时，<stike>你可以增加板子、设备树和soc定义在你的没有添加他们到Zephyr树的应用中</strike>。【如果 Zephyr 尚不支持您正在开发的电路板或平台，您可以将电路板、设备树和 SOC 定义添加到您的应用程序中，而无需将它们添加到 Zephyr 树中。】</p>
+<p><strike>需要这种结构去支持输出树（？）的板子和SOC开发是很相近的对于在Zephyr树中怎样维持板子和SOC。</strike>【支持树外板和 SOC 开发所需的结构类似于在 Zephyr 树中维护板和 SOC 的方式。】通过使用这种结构，当你最初的开发完成时，它将会变得很容易去上流（upstream）【上传】你的平台关联工作在Zephyr树中。</p>
+<p>使用如下的结构去增加用户板子在你的应用或者一个专门的（dedicated）目录中：</p>
+<pre>boards/
+soc/
+CMakeLists.txt
+prj.conf
+README.rst
+src/</pre>
+<p>【boards目录托管您正在为其构建的板：】</p>
+<pre>.
+├── boards
+│   └── x86
+│       └── my_custom_board
+│           ├── doc
+│           │   └── img
+│           └── support
+└── src</pre>
+<p>并且soc目录含有任何soc代码。<strike>你也可以把通过可用的soc支持的板子添加进Zephyr树。</strike>【您还可以拥有由 Zephyr 树中可用的 SOC 支持的板。】</p>
+<h3>Boards</h3>
+<p>使用适当的构筑【架构】文件夹名字（例如x86、arm等）在boards下作为my_custom_board。【在板子下为 my_custom_board 使用正确的架构文件夹名称（例如，x86、arm 等）。】（参考<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/boards/index.html#boards">Supported Boards</a>可以看到一个板子构筑【架构】的列表。）</p>
+<p>文档（在doc/下）和支持文件（在support/下）是可选的，但是当提交至Zephyr时，将会是必要的。</p>
+<p>my_custom_board的内容需要遵循与任意的Zephyr板子同样的<strike>引导行</strike>准则（guidelines），并且提供以下文件：</p>
+<pre>my_custom_board_defconfig
+my_custom_board.dts
+my_custom_board.yaml
+board.cmake
+board.h
+CMakeLists.txt
+doc/
+dts_fixup.h
+Kconfig.board
+Kconfig.defconfig
+pinmux.c
+support/</pre>
 <p></p>
 <p></p>
 <p></p>
