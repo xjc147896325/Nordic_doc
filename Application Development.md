@@ -618,7 +618,7 @@ ninja -C build</pre>
 <pre>cmake -B build -GNinja -DBOARD=(board name) -DDTS_EXTRA_CPPFLAGS=-DTEST_ENABLE_FEATURE.
 ninja -C build</pre>
 <h2>Debug with Exlipse（不是很想trans了）</h2>
-<p></p>
+<p>后面好像是eclipse的debug，没理解错eclipse的话就不看了。去研究程序了。</p>
 <p></p>
 <p></p>
 <p></p>
