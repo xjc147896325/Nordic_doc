@@ -587,7 +587,7 @@ ninja -C build</pre>
 <pre>west build -b (board name) -- -DSOC_ROOT=(path to soc) -DBOARD_ROOT=(path to boards)</pre>
 <p>使用CMake和ninja</p>
 <pre>cmake -B build -GNinja -DBOARD=(board name) -DSOC_ROOT=(path to soc) -DBOARD_ROOT=(path to boards).
-ninja -C build.
+ninja -C build.</pre>
 <p>这将使用你自定义平台配置并且将会生成Zephyr二进制文件在你的应用目录中。</p>
 <p>参考<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/modules.html#modules-build-settings">Build settings</a>获取信息关于设置SOC_ROOT在模块的zephyr/module.yml文件中。</p>
 <p>或者你可以定义SOC_ROOT变量在应用的CMakeLists.txt文件中。确保在使用find_package(Zephyr...)拉进zephyr实例【样板】之前完成。</p>
@@ -610,7 +610,7 @@ ninja -C build</pre>
 <p>你也可以定义变量在应用的CMakeList.txt文件中。确保在使用find_package(Zephyr...)拉进zephyr样板之前完成。</p>
 <p><b>Note</b>:</p>
 <p>当指定DTS_ROOT在CMakeList.txt中，一个绝对路径必须被提供，例如“list(APPEND DTS_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/(extra-dts-root)”。当使用“-DDTS_ROOT=(dts-root)”绝对路径和相对路径都可被使用。相对路径在应用目录中被处理。</p>
-<p>设备树（Devicetree）源码被C预处理器<strike>通过</strike>传递，<strike>以至于<strike>因此你可以引入可以被定位在<strike>一个</strike>DTS_ROOT目录里的文件。<strike>通过转换设备树引入文件有了一个.dtsi扩展</strike>按照惯例，设备树包含文件的扩展名为 .dtsi。</p>
+<p>设备树（Devicetree）源码被C预处理器<strike>通过</strike>传递，<strike>以至于</strike>因此你可以引入可以被定位在<strike>一个</strike>DTS_ROOT目录里的文件。<strike>通过转换设备树引入文件有了一个.dtsi扩展</strike>按照惯例，设备树包含文件的扩展名为 .dtsi。</p>
 <p>你也可以使用预处理器（preprocessor）去控制设备树文件的内容，通过直接指定DTS_EXTRA_CPPFLAGS CMake Catch变量：【方法是通过 DTS_EXTRA_CPPFLAGS CMake Cache 变量指定指令（directives）：】</p>
 <p>使用west：</p>
 <pre>west build -b (board name) -- -DDTS_EXTRA_CPPFLAGS=-DTEST_ENABLE_FEATURE</pre>
