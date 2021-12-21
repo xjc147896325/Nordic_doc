@@ -3,6 +3,8 @@
 <p>关于overlay file<a href="https://www.jianshu.com/p/ad19a76cac0c">简书的解释</a>，看起来是和Linux挂钩的，盲区，麻烦查缺补漏。</p>
 <p>关于QEMU<a href="https://zh.wikipedia.org/wiki/QEMU">Wiki</a>的解释，<a href="https://baike.baidu.com/item/QEMU/1311178">百度百科</a>的解释，也是未知领域，请务必先行了解。</p>
 <p>命令中的“<”用“(”替代。</p>
+	
+<p><a href="https://github.com/xjc147896325/zephyr-doc">Zephyr的翻译文档</a>务必拜读</p>
 
 <hr>
 
