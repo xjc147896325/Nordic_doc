@@ -613,10 +613,10 @@ ninja -C build</pre>
 <p>设备树（Devicetree）源码被C预处理器<strike>通过</strike>传递，<strike>以至于<strike>因此你可以引入可以被定位在<strike>一个</strike>DTS_ROOT目录里的文件。<strike>通过转换设备树引入文件有了一个.dtsi扩展</strike>按照惯例，设备树包含文件的扩展名为 .dtsi。</p>
 <p>你也可以使用预处理器（preprocessor）去控制设备树文件的内容，通过直接指定DTS_EXTRA_CPPFLAGS CMake Catch变量：【方法是通过 DTS_EXTRA_CPPFLAGS CMake Cache 变量指定指令（directives）：】</p>
 <p>使用west：</p>
-<pre>west build -b (board name) -- -DDTS_EXTRA_CPPFLAGS=-DTEST_ENABLE_FEATURE<pre>
+<pre>west build -b (board name) -- -DDTS_EXTRA_CPPFLAGS=-DTEST_ENABLE_FEATURE</pre>
 <p>使用CMake和ninja：</p>
-<p>cmake -B build -GNinja -DBOARD=(board name) -DDTS_EXTRA_CPPFLAGS=-DTEST_ENABLE_FEATURE.
-ninja -C build</p>
+<pre>cmake -B build -GNinja -DBOARD=(board name) -DDTS_EXTRA_CPPFLAGS=-DTEST_ENABLE_FEATURE.
+ninja -C build</pre>
 <h2>Debug with Exlipse（不是很想trans了）</h2>
 <p></p>
 <p></p>
