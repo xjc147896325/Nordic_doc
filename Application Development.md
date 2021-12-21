@@ -5,6 +5,7 @@
 <p>命令中的“<”用“(”替代。</p>
 	
 <p><a href="https://github.com/xjc147896325/zephyr-doc">Zephyr的翻译文档</a>务必拜读</p>
+<p><a href="https://infocenter.nordicsemi.com/index.jsp?topic=%2Fstruct_nrf53%2Fstruct%2Fnrf5340.html">5340的手册</a></p>
 
 <hr>
 
