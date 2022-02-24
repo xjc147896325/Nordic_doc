@@ -20,7 +20,7 @@ Thingy：53 使用USB CDC ACM类的第二个实例（instance）以替代UART0�
 <ul>
   <li>为一个包含nRF21540 FEM的板子构建这个例程，例如<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/boards/arm/nrf21540dk_nrf52840/doc/index.html#nrf21540dk-nrf52840">nrf21540dk_nrf52840</a>。</li>
   <li>手工的（Manually）创建一个设备树覆盖（？overlay）文件，它描述了FEM如何与你设备的nRF5 SOC连接。参考<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/dts/howtos.html#set-devicetree-overlays">Set devicetree overlays</a>了解添加覆盖文件的不同方法。</li>
-  <li><p></p>
+  <li><p>提供nRF21540 FEM性能（capability）通过使用一个屏蔽（shield）【通过使用屏蔽提供 nRF21540 FEM 功能】，比如nRF21540 EK屏蔽，它是允许的在nRF连接SDK中。【例如 nRF Connect SDK 中提供的 nRF21540 EK 屏蔽。】在这个例子中，构建这个项目为了一个板级连接。。。【在这种情况下，使用 build 命令中包含的适当(appropriate)变量为连接到您正在使用的屏蔽的板构建项目。】这个变量指导构建系统去增加适当的设备树覆盖文件。</p>
     <pre></pre>
     <p></p></li>
 </ul>
