@@ -15,11 +15,11 @@ Thingy：53 使用USB CDC ACM类的第二个实例（instance）以替代UART0�
 在Thingy：53的调试记录/日志通过USB CDC ACM类串行端口提供，代替使用RTT。</pre>
 <hr>
 
-<h3></h3>
-<p></p>
+<h3>FEM支持</h3>
+<p>你可以增加支持对nRF21540前端模块（front-end module）在这个例程中通过使用以下的选项中的一个，依赖于你的硬件：【根据您的硬件，您可以使用以下选项之一向此示例添加对 nRF21540 前端模块的支持：】</p>
 <ul>
-  <li></li>
-  <li></li>
+  <li>为一个包含nRF21540 FEM的板子构建这个例程，例如<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/boards/arm/nrf21540dk_nrf52840/doc/index.html#nrf21540dk-nrf52840">nrf21540dk_nrf52840</a>。</li>
+  <li>手工的（Manually）创建一个设备树覆盖（？overlay）文件，它描述了FEM如何与你设备的nRF5 SOC连接。参考<a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.1/zephyr/guides/dts/howtos.html#set-devicetree-overlays">Set devicetree overlays</a>了解添加覆盖文件的不同方法。</li>
   <li><p></p>
     <pre></pre>
     <p></p></li>
